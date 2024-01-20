@@ -35,6 +35,15 @@ Una vez ejecutado, deberia poder acceder el Swagger en http://localhost:8080/swa
 
 Se brindan tres endpoints de queries y dos de comandos. El sistema esta organizado como un sistema CQRS. Los comandos estan segregados de los queries, sin embargo, hay un comando que depende de un query. Detallare mas adelante.
 
+Dashboard de Event Store:
+![image](https://github.com/Zenyatta11/MagoyaChallenge/assets/94550664/0fdf4745-7221-48c8-9948-1a74068dc3e1)
+
+Stream-viewer
+![image](https://github.com/Zenyatta11/MagoyaChallenge/assets/94550664/d60da960-6288-412d-b236-a49249c3bffe)
+
+Eventos de un stream particular (una cuenta bancaria)
+![image](https://github.com/Zenyatta11/MagoyaChallenge/assets/94550664/e4e171fb-8f26-4ae4-b038-1015cc3fb019)
+
 ### Queries
 
 Los queries se ejecutan en el momento y brindan la ultima version disponible de una entidad. El query de todas las cuentas brindara la ultima version de todas las cuentas que se encuentren disponibles en formato de paginas. El query de una cuenta especifica brindara la ultima version de esa cuenta particular.
@@ -54,7 +63,9 @@ No esta permitido crear un evento de escritura (comando) con version mas chica a
 ## Postman
 
 Se brinda una coleccion, separado con comandos por un lado y queries por el otro. Esta programado de tal manera que se almacenara la ultima cuenta creada y, si llegara a suceder que se manda un comando con versiones viejas, obteniendo el balance se almacenara la ultima version y podra asi continuar haciendo depositos/retiros.
+![image](https://github.com/Zenyatta11/MagoyaChallenge/assets/94550664/4b4c9bf1-1044-4503-b82b-3e0be8286861)
 
 ## JMeter
 
 Los tests de JMeter son en fila y deberian pasar siempre, independientemente de cuando se ejecutan.
+![image](https://github.com/Zenyatta11/MagoyaChallenge/assets/94550664/a59a4cc3-1c63-4216-b9de-d9bbdf7abde2)
