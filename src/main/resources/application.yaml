@@ -1,0 +1,27 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  sql:
+    init:
+      platform: "postgres"
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    username: "postgres"
+    password: "Password12!"
+
+esdb:
+  connectionstring: "esdb://localhost:2113?tls=false"
+
+logging:
+  level:
+    root: info
+    com.zenyatta: info
