@@ -1,6 +1,8 @@
 # Magoya Programming Challenge
 ====================
 
+TODO: Continuar y terminar documentando en el codigo mismo
+
 Este proyecto fue proporcionado por Magoya como un challenge para continuar con la entrevista laboral. El PDF del challenge se encuentra adjuntado.
 
 Utiliza:
