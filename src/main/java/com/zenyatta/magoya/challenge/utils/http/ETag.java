@@ -16,6 +16,13 @@ public record ETag(String value) {
         }
     }
 
+    /**
+     * This method formats the ETag into a <code>weak etag<code>. Weak etags prevent
+     * data caching. Strong ETags will always be cached.
+
+     * @param value
+     * @return
+     */
     public static ETag weak(final Object value) {
         return new ETag("W/\"%s\"".formatted(value.toString()));
     }

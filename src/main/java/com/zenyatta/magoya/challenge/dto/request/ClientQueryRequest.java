@@ -11,6 +11,14 @@ public record ClientQueryRequest(
         int pageSize,
         BankAccountDetailsRepository repository) {
 
+    /**
+     * This class is in charge of bringing all of the existing bank accounts
+     * and their full details in paged form.
+
+    * @param pageNumber    The page number offset (0 means the first <code>pageSize</code> entries)
+    * @param pageSize      The page size (20 means each page contains 20 entries)
+    * @param repository    The repository to search in
+    */
     public ClientQueryRequest {
         if (pageNumber < 0) {
             throw new IllegalArgumentException(LoggerStrings.INVALID_PAGE_NUMBER);

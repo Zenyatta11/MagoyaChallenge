@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class is the main controller for all query operations. It is
+ * in charge of input validation and delegation to query processing entities.
+ */
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +35,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankQueryController {
     private final BankAccountDetailsRepository bankRepository;
 
+    /**
+     * This endpoint returns a bank account searched by ID. The ETag is optional.
+     * Should an ETag not be provided, it will return the latest version of the entity.
+     * If it happens to be provided, it will return an entity version greater than the
+     * specified.
+
+     * @param id            The bank account ID (Not client ID)
+     * @param ifNoneMatch   The ETag value
+     * @return              A JSON with the specified information
+     */
     @GetMapping("{id}")
     ResponseEntity<BankAccountDetails> getById(
             @PathVariable final UUID id,
@@ -47,6 +61,16 @@ public class BankQueryController {
                 .body(result);
     }
 
+    /**
+     * This endpoint returns a bank account balance searched by ID. The ETag is optional.
+     * Should an ETag not be provided, it will return the latest version of the entity.
+     * If it happens to be provided, it will return an entity version greater than the
+     * specified.
+
+     * @param id            The bank account ID (Not client ID)
+     * @param ifNoneMatch   The ETag value
+     * @return              The balance value as a double.
+     */
     @GetMapping("{id}/balance")
     ResponseEntity<Double> getBalanceById(
             @PathVariable final UUID id,
@@ -60,6 +84,15 @@ public class BankQueryController {
                 .body(result.getBalance());
     }
 
+    /**
+     * This endpoint returns all bank accounts stored. The page parameters are optional. Should
+     * they not be provided, the default search will return the first 20 bank accounts, ordered by
+     * opened date.
+
+     * @param pageNumber    The page number offset. 0 means the first <code>pageSize</code> entries.
+     * @param pageSize      The page size. This defines how many entries are returned per page.
+     * @return              A JSON with the solicited information
+     */
     @GetMapping
     List<BankAccountDetails> get(
             @RequestParam(defaultValue = "0") @Min(0) final Integer pageNumber,

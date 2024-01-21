@@ -33,6 +33,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class is the main controller for all command endpoints.
+ * It is in charge of validation and delegating the requested command
+ * to the command processor.
+ */
 @Validated
 @RestController
 @RequestMapping("api")
@@ -43,6 +48,19 @@ class BankCommandController {
 
     private static ObjectMapper MAPPER = new ObjectMapper();
 
+    /**
+     * Creates a new account. If a client ID is provided, the new bank account
+     * will be opened under said client ID. If it is not provided, a new client ID
+     * will be created and the account will be set under the newly generated client
+     * ID.
+     * </p>
+     * The newly generated account will have a version of 0 and a balance of $0. Once
+     * the command is prepared, it is sent to the command store.
+
+     * @param request   The request object received
+     * @return JSON     A JSON object of the account details
+     * @see EventStoreHandler
+     */
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<String> open(
@@ -77,6 +95,19 @@ class BankCommandController {
             .body(jsonString);
     }
 
+    /**
+     * This endpoint is in charge of executing transactions, be it
+     * <code>DEPOSIT</code> or <code>WITHDRAWAL</code>. If the action
+     * is a <code>WITHDRAWAL</code>, it will first check if there are
+     * sufficient funds in the account and that we are not working with
+     * a negative movement amount.
+
+     * @param request   The request object
+     * @param IF_MATCH  The versioning header. Should it not be equal to the latest version
+     *                  the command will return 412.
+     * @return void     The success is sent via HTTP status code
+     * @see EventHandlerStore
+     */
     @PostMapping("/transactions")
     ResponseEntity<Void> executeTransaction(
             @RequestBody final BankAccountRequest.ExecuteTransaction request,
